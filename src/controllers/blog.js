@@ -1,4 +1,6 @@
 const Blog = require('../models/blog')
+const multer = require('multer')
+const Slug = require('../models/blog')
 const getBlogByBlogName = async (req, res) => {
   try {
     const result = await Blog.find(req.params.articlename)
@@ -50,11 +52,21 @@ const delBlogByBlogId = async (req, res) => {
     return res.status(500).json(error.message)
   }
 }
+
+const getSlug = async (req, res) => {
+  try {
+    const result = Slug.find({slug: req.params.slug})
+    return res.status(200).json(result)
+  } catch (error) {
+    return res.status(500).json(error.message)
+  }
+}
 module.exports = {
   getBlogByBlogName,
   PostBlogByBlogName,
   getAllBlog,
   getBlogByBlogId,
   putBlogByBlogName,
-  delBlogByBlogId
+  delBlogByBlogId,
+  getSlug
 }

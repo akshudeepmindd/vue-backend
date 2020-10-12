@@ -1,9 +1,16 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const slug = require('mongoose-slug-generator')
+mongoose.plugin(slug)
 const blog = new mongoose.Schema(
   {
-    title: { type: String },
-    email: { type: String, unique: true }
+    blog_title: { type: String, slug: 'title' },
+    slug: { type: String, slug: 'title' },
+    blog_description: { type: String },
+    blog_image: { type: String },
+    keywords: {
+      type: Array
+    }
   },
   {
     timestamps: true
