@@ -4,8 +4,8 @@ const slug = require('mongoose-slug-generator')
 mongoose.plugin(slug)
 const blog = new mongoose.Schema(
   {
-    blog_title: { type: String, slug: 'title' },
-    slug: { type: String, slug: 'title' },
+    blog_title: { type: String },
+    slug: { type: String, slug: 'blog_title' },
     blog_description: { type: String },
     blog_image: { type: String },
     keywords: {

@@ -1,6 +1,12 @@
 const Blog = require('../models/blog')
 const multer = require('multer')
 const Slug = require('../models/blog')
+const fs = require('fs')
+const path = require('path')
+const filename = require('../controllers/imageupload')
+const cloudinary = require('cloudinary')
+const { response } = require('express')
+
 const getBlogByBlogName = async (req, res) => {
   try {
     const result = await Blog.find(req.params.articlename)
@@ -11,7 +17,15 @@ const getBlogByBlogName = async (req, res) => {
 }
 const PostBlogByBlogName = async (req, res) => {
   try {
-    const result = await new Blog(req.body).save()
+    console.log(req.file.filename)
+    let file = req.file.filename
+    // let cloud = cloudinary.v2.uploader.upload(`/upload/${file}`)
+    // console.log(cloud, 'cloudinary')
+    const result = await new Blog({
+      ...req.body,
+      
+    }).save()
+    console.log('save')
     return res.status(200).json(result)
   } catch (error) {
     return res.status(500).json(error.message)
@@ -27,7 +41,7 @@ const getAllBlog = async (req, res) => {
 }
 const getBlogByBlogId = async (req, res) => {
   try {
-    const result = await Blog.findOne({ _id: req.params.id })
+    const result = await Blog.findOne({ slug: req.params.slug })
     return res.status(200).json(result)
   } catch (error) {
     return res.status(500).json(error.message)
@@ -55,7 +69,7 @@ const delBlogByBlogId = async (req, res) => {
 
 const getSlug = async (req, res) => {
   try {
-    const result = Slug.find({slug: req.params.slug})
+    const result = Slug.find({ slug: req.params.slug })
     return res.status(200).json(result)
   } catch (error) {
     return res.status(500).json(error.message)

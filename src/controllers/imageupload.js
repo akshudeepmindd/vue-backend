@@ -2,11 +2,10 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const multer = require('multer')
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads')
+    cb(null, `${__dirname}/upload`)
   },
   filename: (req, file, cb) => {
     console.log(file)
@@ -22,16 +21,4 @@ const fileFilter = (req, file, cb) => {
 }
 const upload = multer({ storage: storage, fileFilter: fileFilter })
 
-//Upload route
-app.post('/upload', upload.single('image'), (req, res, next) => {
-  try {
-    return res.status(201).json({
-      message: 'File uploded successfully'
-    })
-  } catch (error) {
-    console.error(error)
-  }
-})
-module.exports = {
-  fileFilter
-}
+exports.upload = upload
