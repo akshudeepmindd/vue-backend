@@ -17,13 +17,29 @@ const getBlogByBlogName = async (req, res) => {
 }
 const PostBlogByBlogName = async (req, res) => {
   try {
-    console.log(req.file.filename)
-    let file = req.file.filename
-    // let cloud = cloudinary.v2.uploader.upload(`/upload/${file}`)
-    // console.log(cloud, 'cloudinary')
+    // // await
+    // cloudinary.v2.uploader.upload(
+    //   path.join(__dirname + '/upload/' + req.file.filename),
+    //   (err, res) => {
+    //     if (err) {
+    //     } else {
+    //       console.log(res)
+    //     }
+    //   }
+    // )
+
+    console.log(
+      fs.readFileSync(path.join(__dirname + '/upload/' + req.file.filename)),
+      'cloudinary'
+    )
     const result = await new Blog({
       ...req.body,
-      
+      blog_image: {
+        data: fs.readFileSync(
+          path.join(__dirname + '/upload/' + req.file.filename)
+        ),
+        contentType: 'image/png'
+      }
     }).save()
     console.log('save')
     return res.status(200).json(result)

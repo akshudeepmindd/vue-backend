@@ -7,7 +7,7 @@ const blog = new mongoose.Schema(
     blog_title: { type: String },
     slug: { type: String, slug: 'blog_title' },
     blog_description: { type: String },
-    blog_image: { type: String },
+    blog_image: { data: Buffer, contentType: String },
     keywords: {
       type: Array
     }
