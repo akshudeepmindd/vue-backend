@@ -17,18 +17,7 @@ const getBlogByBlogName = async (req, res) => {
 }
 const PostBlogByBlogName = async (req, res) => {
   try {
-    // // await
-    // cloudinary.v2.uploader.upload(
-    //   path.join(__dirname + '/upload/' + req.file.filename),
-    //   (err, res) => {
-    //     if (err) {
-    //     } else {
-    //       console.log(res)
-    //     }
-    //   }
-    // )
-
-    console.log(
+  console.log(
       fs.readFileSync(path.join(__dirname + '/upload/' + req.file.filename)),
       'cloudinary'
     )
